@@ -1,0 +1,30 @@
+.header {
+  background-color: white;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  line-height: 28px;
+  margin: 15px;
+}
+
+.signIn,
+.signUp {
+  background: none;
+  padding: 15px;
+  border: none;
+  margin: 5px;
+}
+
+.signIn:hover,
+.signUp:hover {
+  cursor: pointer;
+  border: 1px solid #52c41a;
+  border-radius: 5px;
+  color: #52c41a;
+}

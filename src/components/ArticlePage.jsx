@@ -3,6 +3,7 @@ import ArticlePreview from "./ArticlePreview";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import "../style/ArticlePage.css";
 
 const API_URL = "https://realworld.habsidev.com/api/articles";
 
@@ -42,6 +43,10 @@ export default function ArticlePage() {
         image={article.author.image}
         date={article.createdAt}
         userName={article.author.username}
+        likeCount={article.favoritesCount}
+        tags={article.tagList.filter(
+          (tag) => typeof tag === "string" && tag.trim() !== ""
+        )}
       />
       <div className="page-text">
         <ReactMarkdown>{article.body}</ReactMarkdown>

@@ -1,0 +1,18 @@
+.page-container {
+  width: 70%;
+  margin: 20px auto;
+  background-color: white;
+}
+
+.page-text {
+  width: 100%;
+  padding: 30px 30px 30px 15px;
+  font-size: 18px;
+  background-color: #fff;
+}
+
+.page-text pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

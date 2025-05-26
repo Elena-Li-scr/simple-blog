@@ -1,10 +1,13 @@
 import { format } from "date-fns";
+import "../style/ArticlePreview.css";
 export default function ArticlePreview({
   title,
   description,
   image,
   date,
   userName,
+  likeCount,
+  tags,
 }) {
   return (
     <div className="pre-container">
@@ -12,9 +15,16 @@ export default function ArticlePreview({
         <div className="pre-title">
           <span>{title}</span>
           <img src="/assets/heart.png" alt="heart" />
-          <span className="count">12</span>
+          <span className="count">{likeCount}</span>
         </div>
-        <img src="/assets/tag.png" alt="tag" className="tag" />
+        <div className="tags">
+          {tags &&
+            tags.map((tag, index) => (
+              <span className="tag" key={`${tag}-${index}`}>
+                {tag}
+              </span>
+            ))}
+        </div>
         <p className="pre-text">{description}</p>
       </div>
       <div className="pre-right-part">

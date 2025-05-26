@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ArticlePreview from "./ArticlePreview";
 import { Link } from "react-router-dom";
-import PaginationSwiper from "./PaginationSwiper";
+import Pagination from "./Pagination";
+import "../style/ArticleList.css";
 
 const API_URL = "https://realworld.habsidev.com/api/articles";
 
@@ -24,6 +25,7 @@ export default function ArticleList() {
       .then((res) => {
         setArticles(res.data.articles);
         setArticlesCount(res.data.articlesCount);
+        console.log(res.data.articles);
       })
       .catch((e) => {
         console.log(e);
@@ -49,12 +51,16 @@ export default function ArticleList() {
                 image={article.author.image}
                 date={article.createdAt}
                 userName={article.author.username}
+                likeCount={article.favoritesCount}
+                tags={article.tagList.filter(
+                  (tag) => typeof tag === "string" && tag.trim() !== ""
+                )}
               />
             </Link>
           </li>
         ))}
       </ul>
-      <PaginationSwiper
+      <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         OnPage={setCurrentPage}
