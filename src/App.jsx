@@ -10,8 +10,8 @@ import Profile from "./components/Profile";
 function App() {
   return (
     <>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/" element={<Navigate to="/articles" />} />
           <Route path="/articles" element={<ArticleList />} />

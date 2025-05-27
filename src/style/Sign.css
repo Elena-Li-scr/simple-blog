@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+.sign-form,
+.edit-form {
+  width: 384px;
+  background-color: white;
+  margin: 20px auto;
+  padding: 40px 32px 20px 32px;
+  border-radius: 6px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.input {
+  width: 320px;
+  height: 40px;
+  padding: 10px;
+  margin: 5px auto;
+  font-size: 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.input:focus {
+  outline: none;
+}
+.input-error,
+.input-error:focus {
+  border-color: #f5222d;
+}
+label {
+  font-size: 14px;
+  display: block;
+  margin-top: 15px;
+}
+
+.line {
+  width: 320px;
+  height: 2px;
+  background-color: #e8e8e8;
+  margin: 10px 0px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 14px;
+  color: #595959;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.sign-button,
+.save-button {
+  color: white;
+  background-color: #1890ff;
+  width: 319px;
+  height: 40px;
+  margin: 20px 0px 10px 0px;
+  border: 1px solid #1890ff;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.note {
+  color: #8c8c8c;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.link-to-sign,
+.link-to-sign:visited {
+  color: #1890ff;
+}
+
+.errors {
+  color: #f5222d;
+  font-size: 14px;
+}
