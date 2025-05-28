@@ -2,6 +2,7 @@
   width: 70%;
   margin: 20px auto;
   background-color: white;
+  position: relative;
 }
 
 .page-text {
@@ -15,4 +16,88 @@
   overflow-x: auto;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.edit-del-btn {
+  position: absolute;
+  right: 0;
+  top: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.del-btn,
+.edit-btn {
+  width: 78px;
+  height: 31px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #f5222d;
+  font-size: 14px;
+  background-color: inherit;
+}
+
+.edit-btn {
+  border: 1px solid #52c41a;
+}
+
+.modal-container {
+  position: absolute;
+  width: 240px;
+  height: 104px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+  top: 90px;
+  right: -150px;
+  -webkit-box-shadow: 0px 3px 17px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 3px 17px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 3px 17px 0px rgba(34, 60, 80, 0.2);
+  z-index: 2;
+}
+
+.arrow {
+  position: absolute;
+  top: 90px;
+  right: 90px;
+  z-index: 3;
+}
+
+.modal-text {
+  color: #595959;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.modal-text img {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.modal-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 17px;
+}
+
+.modal-btn button {
+  width: auto;
+  height: 24px;
+  border: 1px solid rgb(184, 182, 182);
+  border-radius: 4px;
+  margin-left: 10px;
+  padding: 5px 7px;
+  background-color: inherit;
+  cursor: pointer;
+}
+.modal-btn button:hover {
+  background-color: #1890ff;
+  color: white;
 }

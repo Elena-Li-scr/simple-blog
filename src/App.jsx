@@ -6,6 +6,8 @@ import Header from "./components/Header";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
+import NewArticle from "./components/NewArticle";
+import EditArticle from "./components/EditArticle";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/new-article" element={<NewArticle />} />
+          <Route path="/articles/:slug/edit" element={<EditArticle />} />
         </Routes>
       </BrowserRouter>
     </>

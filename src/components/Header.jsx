@@ -14,7 +14,9 @@ export default function Header() {
 
       {user ? (
         <div className="loginUser">
-          <button className="create-article">Create article</button>
+          <Link to="/new-article" className="create-article">
+            Create article
+          </Link>
           <Link to="/profile" className="username">
             {user.username}
           </Link>
