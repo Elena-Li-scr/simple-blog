@@ -8,13 +8,29 @@ export default function ArticlePreview({
   userName,
   likeCount,
   tags,
+  like,
+  onLike,
+  onClick,
 }) {
   return (
-    <div className="pre-container">
+    <div className="pre-container" onClick={onClick}>
       <div className="pre-left-part">
         <div className="pre-title">
           <span>{title}</span>
-          <img src="/assets/heart.png" alt="heart" />
+          <button
+            className="like-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onLike();
+            }}
+          >
+            {like ? (
+              <img src="/assets/like.png" alt="heart" />
+            ) : (
+              <img src="/assets/heart.png" alt="heart" />
+            )}
+          </button>
+
           <span className="count">{likeCount}</span>
         </div>
         <div className="tags">

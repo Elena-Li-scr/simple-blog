@@ -51,7 +51,6 @@ export default function EditArticle() {
           tagList: data.tagList,
         },
       };
-      console.log({ request });
 
       const response = await axios.put(
         `https://realworld.habsidev.com/api/articles/${slug}`,

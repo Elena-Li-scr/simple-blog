@@ -79,3 +79,9 @@
   margin-right: 5px;
   padding: 2px 4px;
 }
+
+.like-btn {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
