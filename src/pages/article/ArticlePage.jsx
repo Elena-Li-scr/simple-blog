@@ -3,7 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import ReactMarkdown from "react-markdown";
 import ArticlePreview from "./ArticlePreview";
-import { getArticle, deleteArticle } from "../../services/articleService";
+import {
+  getArticle,
+  deleteArticle,
+  likeArticle,
+  unLikeArticle,
+} from "../../services/articleService";
 import useLoadingAndError from "../../hooks/useLoadingAndError";
 import Loader from "../../components/Loader";
 
@@ -44,6 +49,26 @@ export default function ArticlePage() {
     }
   };
 
+  const handleLike = async (slug, favorited) => {
+    if (!user) {
+      navigate("/sign-in");
+      return;
+    }
+
+    try {
+      let response;
+      if (favorited) {
+        response = await unLikeArticle({ API_URL, slug, user });
+      } else {
+        response = await likeArticle({ API_URL, slug, user });
+      }
+
+      setArticle(response.data.article);
+    } catch (error) {
+      console.error("Failed to toggle like:", error);
+    }
+  };
+
   if (loading) return <Loader />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!article) return null;
@@ -60,6 +85,7 @@ export default function ArticlePage() {
         userName={article.author.username}
         likeCount={article.favoritesCount}
         like={article.favorited}
+        onLike={() => handleLike(article.slug, article.favorited)}
         tags={article.tagList.filter(
           (tag) => typeof tag === "string" && tag.trim() !== ""
         )}

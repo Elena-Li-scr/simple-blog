@@ -13,5 +13,5 @@ export function getUser({ request }) {
 }
 
 export function newUser({ request }) {
-  axios.post("https://realworld.habsidev.com/api/users", request);
+  return axios.post("https://realworld.habsidev.com/api/users", request);
 }

@@ -28,6 +28,7 @@ export default function SignUp() {
     };
     try {
       const response = await newUser({ request });
+
       console.log(response.data);
       setServerError("");
       logIn(response.data.user);
