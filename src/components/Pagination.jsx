@@ -11,7 +11,7 @@ export default function Pagination({ totalPages, currentPage, OnPage }) {
     } else if (currentPage >= pageWindowStart + windowSize) {
       setPageWindowStart(currentPage);
     }
-  }, [currentPage]);
+  }, [currentPage]); // eslint-disable-line
 
   if (totalPages <= 1) return null;
 

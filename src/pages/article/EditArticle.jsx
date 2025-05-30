@@ -1,7 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ArticleForm from "./ArticleForm";
-import { getEditArticle, putEditArticle } from "../../services/articleService";
+import {
+  getEditArticle,
+  postArticle,
+  deleteArticle,
+} from "../../services/articleService";
 import { UserContext } from "../../context/UserContext";
 import useLoadingAndError from "../../hooks/useLoadingAndError";
 import Loader from "../../components/Loader";
@@ -52,9 +56,8 @@ export default function EditArticle() {
         },
       };
 
-      console.log(request);
-
-      const response = await putEditArticle({ slug, request, user });
+      await deleteArticle({ user, slug });
+      const response = await postArticle({ request, user });
       navigate(`/articles/${response.data.article.slug}`);
     } catch (err) {
       console.error("Update failed:", err);

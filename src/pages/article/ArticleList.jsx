@@ -36,8 +36,9 @@ export default function ArticleList() {
       setArticlesCount,
       setError,
       setLoading,
+      user,
     });
-  }, [currentPage, offset, setError, setLoading]);
+  }, [currentPage, offset, setError, setLoading, user]);
 
   const handleLike = async (slug, favorited) => {
     if (!user) {

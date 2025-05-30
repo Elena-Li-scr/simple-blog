@@ -7,9 +7,12 @@ export function getPageArticle({
   setArticlesCount,
   setError,
   setLoading,
+  user,
 }) {
   axios
-    .get(`${API_URL}?limit=${limit}&offset=${offset}`)
+    .get(`${API_URL}?limit=${limit}&offset=${offset}`, {
+      headers: user ? { Authorization: `Token ${user.token}` } : {},
+    })
     .then((res) => {
       setArticles(res.data.articles);
       setArticlesCount(res.data.articlesCount);
@@ -45,9 +48,12 @@ export function getArticle({
   setArticle,
   setError,
   setLoading,
+  user,
 }) {
   axios
-    .get(`${API_URL}/${slug}`)
+    .get(`${API_URL}/${slug}`, {
+      headers: user ? { Authorization: `Token ${user.token}` } : {},
+    })
     .then((res) => {
       setArticle(res.data.article);
     })

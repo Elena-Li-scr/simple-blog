@@ -29,8 +29,9 @@ export default function ArticlePage() {
       setArticle,
       setError,
       setLoading,
+      user,
     });
-  }, [slug, setLoading, setError]);
+  }, [slug, setLoading, setError, user]);
 
   const deleteHandler = async () => {
     try {
@@ -58,6 +59,7 @@ export default function ArticlePage() {
         date={article.createdAt}
         userName={article.author.username}
         likeCount={article.favoritesCount}
+        like={article.favorited}
         tags={article.tagList.filter(
           (tag) => typeof tag === "string" && tag.trim() !== ""
         )}
