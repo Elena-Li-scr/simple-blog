@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../style/Pagination.css";
+import "./Pagination.css";
 
 export default function Pagination({ totalPages, currentPage, OnPage }) {
   const [pageWindowStart, setPageWindowStart] = useState(1);

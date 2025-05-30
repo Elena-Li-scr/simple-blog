@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import "../style/ArticlePreview.css";
+import "./ArticlePreview.css";
 export default function ArticlePreview({
   title,
   description,

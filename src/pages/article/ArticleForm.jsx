@@ -1,12 +1,12 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 
-import "../style/ArticleForm.css";
+import "./ArticleForm.css";
 
 export default function ArticleForm({
   onSubmit,
   initialValues = {},
-  isLoading = false,
+  loading = false,
 }) {
   const {
     register,
@@ -32,20 +32,20 @@ export default function ArticleForm({
   useEffect(() => {
     if (!initialValues) return;
 
+    reset({
+      title: initialValues.title || "",
+      description: initialValues.description || "",
+      body: initialValues.body || "",
+      tagList: [],
+    });
+
     const safeTags =
       Array.isArray(initialValues.tagList) && initialValues.tagList.length > 0
         ? initialValues.tagList
         : [""];
 
-    reset({
-      title: initialValues.title || "",
-      description: initialValues.description || "",
-      body: initialValues.body || "",
-      tagList: safeTags,
-    });
-
     replace(safeTags);
-  }, [initialValues?.title]);
+  }, [initialValues?.title]); // eslint-disable-line
 
   return (
     <form className="article-form" onSubmit={handleSubmit(onSubmit)}>
@@ -114,8 +114,8 @@ export default function ArticleForm({
         </button>
       </div>
 
-      <button type="submit" disabled={isLoading} className="saveBtn">
-        {isLoading ? "Saving..." : "Send"}
+      <button type="submit" disabled={loading} className="saveBtn">
+        {loading ? "Saving..." : "Send"}
       </button>
     </form>
   );

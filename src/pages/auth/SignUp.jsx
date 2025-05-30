@@ -1,9 +1,11 @@
-import axios from "axios";
-import "../style/Sign.css";
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import { emailPattern } from "../../utils/validationRules";
+import { newUser } from "../../services/authServices";
+
+import "./Sign.css";
 
 export default function SignUp() {
   const {
@@ -25,10 +27,7 @@ export default function SignUp() {
       },
     };
     try {
-      const response = await axios.post(
-        "https://realworld.habsidev.com/api/users",
-        request
-      );
+      const response = await newUser({ request });
       console.log(response.data);
       setServerError("");
       logIn(response.data.user);
@@ -79,10 +78,7 @@ export default function SignUp() {
         className={errors.email ? "input input-error" : "input"}
         {...register("email", {
           required: true,
-          pattern: {
-            value: /^\S+@\S+\.\S+$/,
-            message: "Incorrect email format",
-          },
+          pattern: emailPattern,
         })}
       />
       {errors.email && <p className="errors">{errors.email.message}</p>}

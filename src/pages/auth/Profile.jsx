@@ -1,8 +1,10 @@
-import axios from "axios";
-import "../style/Sign.css";
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
+import { emailPattern, imagePattern } from "../../utils/validationRules";
+import { editProfile } from "../../services/authServices";
+
+import "./Sign.css";
 
 export default function Profile() {
   const {
@@ -33,15 +35,7 @@ export default function Profile() {
       image: data.image,
     };
     try {
-      const response = await axios.put(
-        "https://realworld.habsidev.com/api/user",
-        request,
-        {
-          headers: {
-            Authorization: `Token ${user.token}`,
-          },
-        }
-      );
+      const response = await editProfile({ request, user });
       console.log(response.data);
       logIn(response.data.user);
       reset({
@@ -95,10 +89,7 @@ export default function Profile() {
         className={errors.email ? "input input-error" : "input"}
         {...register("email", {
           required: true,
-          pattern: {
-            value: /^\S+@\S+\.\S+$/,
-            message: "Incorrect email format",
-          },
+          pattern: emailPattern,
         })}
       />
       {errors.email && <p className="errors">{errors.email.message}</p>}
@@ -128,10 +119,7 @@ export default function Profile() {
         placeholder="Avatar image"
         className={errors.image ? "input input-error" : "input"}
         {...register("image", {
-          pattern: {
-            value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))$/i,
-            message: "Must be a valid image URL",
-          },
+          pattern: imagePattern,
         })}
       />
       {errors.image && <p className="errors">{errors.image.message}</p>}

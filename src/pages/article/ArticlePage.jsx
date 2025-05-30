@@ -1,10 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
-import ArticlePreview from "./ArticlePreview";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
-import axios from "axios";
+import { UserContext } from "../../context/UserContext";
 import ReactMarkdown from "react-markdown";
-import "../style/ArticlePage.css";
+import ArticlePreview from "./ArticlePreview";
+import { getArticle, deleteArticle } from "../../services/articleService";
+import useLoadingAndError from "../../hooks/useLoadingAndError";
+import Loader from "../../components/Loader";
+
+import "./ArticlePage.css";
 
 const API_URL = "https://realworld.habsidev.com/api/articles";
 
@@ -12,8 +15,7 @@ export default function ArticlePage() {
   const { slug } = useParams();
   const { user } = useContext(UserContext);
   const [article, setArticle] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { loading, error, setLoading, setError } = useLoadingAndError();
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
@@ -21,30 +23,18 @@ export default function ArticlePage() {
     setLoading(true);
     setError(null);
 
-    axios
-      .get(`${API_URL}/${slug}`)
-      .then((res) => {
-        setArticle(res.data.article);
-      })
-      .catch((e) => {
-        console.log(e);
-        setError("Failed to load article.");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [slug]);
+    getArticle({
+      API_URL,
+      slug,
+      setArticle,
+      setError,
+      setLoading,
+    });
+  }, [slug, setLoading, setError]);
 
   const deleteHandler = async () => {
     try {
-      await axios.delete(
-        `https://realworld.habsidev.com/api/articles/${slug}`,
-        {
-          headers: {
-            Authorization: `Token ${user.token}`,
-          },
-        }
-      );
+      await deleteArticle({ slug, user });
       alert("The article was successfully deleted");
       navigate("/");
     } catch (error) {
@@ -53,7 +43,7 @@ export default function ArticlePage() {
     }
   };
 
-  if (loading) return <p>Loading article...</p>;
+  if (loading) return <Loader />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!article) return null;
 

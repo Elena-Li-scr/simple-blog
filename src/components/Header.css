@@ -62,7 +62,11 @@
   font-size: 18px;
   margin: 0px 20px;
 }
-
+.log-out:visited,
+.signIn:visited,
+.signUp:visited {
+  color: inherit;
+}
 .signIn:hover,
 .signUp:hover,
 .log-out:hover {
@@ -70,11 +74,4 @@
   border: 1px solid #52c41a;
   border-radius: 5px;
   color: #52c41a;
-}
-
-.log-out:visited,
-.signIn:visited,
-.signUp:visited,
-.create-article:visited {
-  color: inherit;
 }

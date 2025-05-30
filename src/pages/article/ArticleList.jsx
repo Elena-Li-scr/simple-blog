@@ -1,17 +1,22 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 import ArticlePreview from "./ArticlePreview";
-import { Link, useNavigate } from "react-router-dom";
-import Pagination from "./Pagination";
-import "../style/ArticleList.css";
-import { UserContext } from "../context/UserContext";
+import Pagination from "../../components/Pagination";
+import useLoadingAndError from "../../hooks/useLoadingAndError";
+import Loader from "../../components/Loader";
+import {
+  getPageArticle,
+  likeArticle,
+  unLikeArticle,
+} from "../../services/articleService";
+import "./ArticleList.css";
 
 const API_URL = "https://realworld.habsidev.com/api/articles";
 
 export default function ArticleList() {
   const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { loading, error, setLoading, setError } = useLoadingAndError();
   const [currentPage, setCurrentPage] = useState(1);
   const [articlesCount, setArticlesCount] = useState(0);
   const navigate = useNavigate();
@@ -23,21 +28,16 @@ export default function ArticleList() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    axios
-      .get(`${API_URL}?limit=${limit}&offset=${offset}`)
-      .then((res) => {
-        setArticles(res.data.articles);
-        setArticlesCount(res.data.articlesCount);
-        console.log(res.data.articles);
-      })
-      .catch((e) => {
-        console.log(e);
-        setError("Failed to load articles.");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [currentPage, offset]);
+    getPageArticle({
+      API_URL,
+      limit,
+      offset,
+      setArticles,
+      setArticlesCount,
+      setError,
+      setLoading,
+    });
+  }, [currentPage, offset, setError, setLoading]);
 
   const handleLike = async (slug, favorited) => {
     if (!user) {
@@ -48,17 +48,9 @@ export default function ArticleList() {
     try {
       let response;
       if (favorited) {
-        response = await axios.delete(`${API_URL}/${slug}/favorite`, {
-          headers: { Authorization: `Token ${user.token}` },
-        });
+        response = await unLikeArticle({ API_URL, slug, user });
       } else {
-        response = await axios.post(
-          `${API_URL}/${slug}/favorite`,
-          {},
-          {
-            headers: { Authorization: `Token ${user.token}` },
-          }
-        );
+        response = await likeArticle({ API_URL, slug, user });
       }
 
       setArticles((prevArticles) =>
@@ -69,7 +61,7 @@ export default function ArticleList() {
     }
   };
 
-  if (loading) return <p>Loading articles...</p>;
+  if (loading) return <Loader />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (

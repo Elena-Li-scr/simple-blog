@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import ArticleForm from "../components/ArticleForm";
-import axios from "axios";
+import { UserContext } from "../../context/UserContext";
+import ArticleForm from "./ArticleForm";
+import { postArticle } from "../../services/articleService";
 
 export default function NewArticle() {
   const { user } = useContext(UserContext);
@@ -19,15 +19,9 @@ export default function NewArticle() {
     };
 
     try {
-      const response = await axios.post(
-        "https://realworld.habsidev.com/api/articles",
-        request,
-        {
-          headers: {
-            Authorization: `Token ${user.token}`,
-          },
-        }
-      );
+      const response = await postArticle({ request, user });
+      console.log(request);
+
       const slug = response.data.article.slug;
       navigate(`/articles/${slug}`);
     } catch (error) {

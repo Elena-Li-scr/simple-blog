@@ -1,13 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import ArticleList from "./components/ArticleList";
-import ArticlePage from "./components/ArticlePage";
+import ArticleList from "./pages/article/ArticleList";
+import ArticlePage from "./pages/article/ArticlePage";
 import Header from "./components/Header";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import Profile from "./components/Profile";
-import NewArticle from "./components/NewArticle";
-import EditArticle from "./components/EditArticle";
+import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
+import Profile from "./pages/auth/Profile";
+import NewArticle from "./pages/article/NewArticle";
+import EditArticle from "./pages/article/EditArticle";
 
 function App() {
   return (

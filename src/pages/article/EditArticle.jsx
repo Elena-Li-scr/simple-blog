@@ -1,8 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import ArticleForm from "../components/ArticleForm";
-import { UserContext } from "../context/UserContext";
+import ArticleForm from "./ArticleForm";
+import { getEditArticle, putEditArticle } from "../../services/articleService";
+import { UserContext } from "../../context/UserContext";
+import useLoadingAndError from "../../hooks/useLoadingAndError";
+import Loader from "../../components/Loader";
 
 export default function EditArticle() {
   const { slug } = useParams();
@@ -10,7 +12,7 @@ export default function EditArticle() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading, setLoading } = useLoadingAndError();
 
   useEffect(() => {
     if (!user) {
@@ -20,9 +22,7 @@ export default function EditArticle() {
 
     const fetchArticle = async () => {
       try {
-        const response = await axios.get(
-          `https://realworld.habsidev.com/api/articles/${slug}`
-        );
+        const response = await getEditArticle({ slug });
         const article = response.data.article;
 
         setInitialValues({
@@ -41,41 +41,35 @@ export default function EditArticle() {
   }, [slug, user, navigate]);
 
   const handleUpdate = async (data) => {
-    setIsLoading(true);
+    setLoading(true);
     try {
       const request = {
         article: {
           title: data.title,
           description: data.description,
           body: data.body,
-          tagList: data.tagList,
+          tagList: data.tagList.filter((tag) => tag.trim() !== ""),
         },
       };
 
-      const response = await axios.put(
-        `https://realworld.habsidev.com/api/articles/${slug}`,
-        request,
-        {
-          headers: {
-            Authorization: `Token ${user.token}`,
-          },
-        }
-      );
+      console.log(request);
+
+      const response = await putEditArticle({ slug, request, user });
       navigate(`/articles/${response.data.article.slug}`);
     } catch (err) {
       console.error("Update failed:", err);
       alert("Failed to update article.");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
   return initialValues ? (
     <ArticleForm
       onSubmit={handleUpdate}
       initialValues={initialValues}
-      isLoading={isLoading}
+      isLoading={loading}
     />
   ) : (
-    <p>Loading article...</p>
+    <Loader />
   );
 }
